@@ -1,10 +1,459 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Web</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Demo</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        .paper-title {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .authors {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+        .institution {
+            color: #666;
+            font-style: italic;
+        }
+        .abstract {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .section-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin: 30px 0 20px;
+        }
+        .demo-section {
+            margin-bottom: 40px;
+        }
+        .audio-item {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .audio-label {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        .audio-description {
+            margin: 10px 0;
+            color: #666;
+        }
+        audio {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .citation {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .supplementary {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+        .paper-link {
+            display: inline-block;
+            margin: 10px 0;
+            color: #0366d6;
+            text-decoration: none;
+        }
+        .paper-link:hover {
+            text-decoration: underline;
+        }
+        .demo-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            table-layout: fixed;
+        }
+        .demo-table th, .demo-table td {
+            padding: 15px;
+            border: 1px solid #e1e4e8;
+            text-align: left;
+            vertical-align: top;
+            width: 20%;
+        }
+        .demo-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .demo-table audio {
+            width: 100%;
+            margin: 10px 0;
+        }
+        .demo-table .text-content {
+            margin-bottom: 10px;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
-  <h1>Welcome</h1>
-  <p> GitHub Pages </p>
+    <div class="header">
+        <h1 class="paper-title">Accelerating Autoregressive Speech Synthesis Inference With Speech Speculative Decoding</h1>
+        <div class="authors">
+            Anonymous
+        </div>
+    </div>
+
+    <div class="abstract">
+        <h2 class="section-title">Abstract</h2>
+        <p>Modern autoregressive speech synthesis models leveraging language models have demonstrated remarkable performance. However, the sequential nature of next token prediction in these models leads to significant latency, hindering their deployment in scenarios where inference speed is critical. In this work, we propose Speech Speculative Decoding (SSD), a novel framework for autoregressive speech synthesis acceleration. Specifically, our method employs a lightweight draft model to generate candidate token sequences, which are subsequently verified in parallel by the target model using the proposed SSD framework. Experimental results demonstrate that SSD achieves a significant speedup of 1.4x compared with conventional autoregressive decoding, while maintaining high fidelity and naturalness. Subjective evaluations further validates the effectiveness of SSD in preserving the perceptual quality of the target model while accelerating inference.</p>
+    </div>
+
+    <div class="demo-section">
+        <h2 class="section-title">Audio Samples</h2>
+        <table class="demo-table">
+            <thead>
+                <tr>
+                    <th>Prompt Text & Speech</th>
+                    <th>Target Text</th>
+                    <th>Draft Model</th>
+                    <th>CosyVoice 2</th>
+                    <th>CosyVoice 2 + SSD</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="text-content">I get wet to my knees when I go down to pick cherries.</div>
+                        <audio controls>
+                            <source src="speech/prompt/237_134493_000015_000004.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <div class="text-content">"So you must," cried Jasper, enchanted at his success in amusing; "and I'll go with you."</div>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/draftmodel/237_126133_000043_000000_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/cosyvoice2/237_126133_000043_000000_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/SSD/237_126133_000043_000000_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="text-content">The case is not entirely devoid of interest.</div>
+                        <audio controls>
+                            <source src="speech/prompt/1580_141083_000019_000001.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <div class="text-content">For an instant I imagined that Bannister had taken the unpardonable liberty of examining my papers.</div>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/draftmodel/1580_141083_000015_000000_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/cosyvoice2/1580_141083_000015_000000_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/SSD/1580_141083_000015_000000_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="text-content">born but to smile and fall. Ah!</div>
+                        <audio controls>
+                            <source src="speech/prompt/908_157963_000010_000001.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <div class="text-content">Dearest, teach me so To pour out gratitude, as thou dost, good!</div>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/draftmodel/908_31957_000019_000001_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/cosyvoice2/908_31957_000019_000001_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/SSD/908_31957_000019_000001_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="text-content">A great saint, saint Francis Xavier!</div>
+                        <audio controls>
+                            <source src="speech/prompt/1089_134686_000032_000008.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <div class="text-content">The bell rang. The master marked the sums and cuts to be done for the next lesson and went out.</div>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/draftmodel/1089_134686_000015_000003_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/cosyvoice2/1089_134686_000015_000003_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/SSD/1089_134686_000015_000003_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="text-content">I say, "whether color be gay or sad."</div>
+                        <audio controls>
+                            <source src="speech/prompt/1188_133604_000026_000001.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <div class="text-content">Every plant in the grass is set formally, grows perfectly, and may be realized completely.</div>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/draftmodel/1188_133604_000048_000001_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/cosyvoice2/1188_133604_000048_000001_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/SSD/1188_133604_000048_000001_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="text-content">I want it to bring my Patchwork Girl to life.</div>
+                        <audio controls>
+                            <source src="speech/prompt/1284_1180_000044_000001.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <div class="text-content">"I never knew I was called the Unlucky," said Ojo, soberly; "but it is really a good name for me."</div>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/draftmodel/1284_1180_000020_000000_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/cosyvoice2/1284_1180_000020_000000_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/SSD/1284_1180_000020_000000_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="text-content">"She was ten years older," said her husband.</div>
+                        <audio controls>
+                            <source src="speech/prompt/121_127105_000037_000000.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <div class="text-content">This I took for a sign that he had himself something to produce and that we should only have to wait.</div>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/draftmodel/121_127105_000007_000003_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/cosyvoice2/121_127105_000007_000003_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/SSD/121_127105_000007_000003_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="text-content">"Cut his bands," said Hawkeye to David, who just then approached them.</div>
+                        <audio controls>
+                            <source src="speech/prompt/1320_122617_000033_000000.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <div class="text-content">At last the scout spoke in English, and at once explained the embarrassment of their situation.</div>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/draftmodel/1320_122612_000006_000004_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/cosyvoice2/1320_122612_000006_000004_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/SSD/1320_122612_000006_000004_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="text-content">Up in the sick room Zora lay on the little white bed.</div>
+                        <audio controls>
+                            <source src="speech/prompt/1995_1837_000020_000000.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <div class="text-content">The Sun, the Swamp? Then finding all well, she closed her eyes and slept.</div>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/draftmodel/1995_1837_000021_000002_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/cosyvoice2/1995_1837_000021_000002_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/SSD/1995_1837_000021_000002_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="text-content">The sail stretches tight like a bubble ready to burst.</div>
+                        <audio controls>
+                            <source src="speech/prompt/260_123288_000019_000001.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <div class="text-content">What a very bad notion that was of his, I thought to myself, to take soundings just here!</div>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/draftmodel/260_123286_000034_000003_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/cosyvoice2/260_123286_000034_000003_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                    <td>
+                        <audio controls>
+                            <source src="speech/SSD/260_123286_000034_000003_0.wav" type="audio/wav">
+                            Your browser does not support audio playback.
+                        </audio>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer style="text-align: center; margin-top: 50px; color: #666;">
+        <p>© 2025 All Rights Reserved</p>
+    </footer>
 </body>
 </html>
