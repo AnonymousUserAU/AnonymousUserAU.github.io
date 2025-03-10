@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: "Roboto", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-            max-width: 1200px;
+            max-width: 1500px;
             margin: 0 auto;
             padding: 20px;
             line-height: 1.5;
@@ -17,20 +17,21 @@
         }
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            /* margin-bottom: 40px; */
             padding: 40px;
-            border-bottom: 2px solid #dee2e6;
+            /* border-bottom: 2px solid #dee2e6; */
         }
         .paper-title {
             font-size: 2.6rem;
-            margin-bottom: 30px;
+            /* margin-bottom: 30px; */
             color: #263c4c;
             font-weight: bold;
         }
         .authors {
             color: #495057;
-            margin-bottom: 25px;
+            /* margin-bottom: 25px; */
             font-size: 1.2em;
+            font-style: italic;
         }
         .institution {
             color: #6c757d;
@@ -121,14 +122,13 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1 class="paper-title">Accelerating Autoregressive Speech Synthesis Inference With Speech Speculative Decoding</h1>
-        <div class="authors">
-            Anonymous
-        </div>
-    </div>
-
     <div class="abstract">
+        <div class="header">
+            <h1 class="paper-title">Accelerating Autoregressive Speech Synthesis Inference With Speech Speculative Decoding</h1>
+            <div class="authors">
+                Anonymous
+            </div>
+        </div>
         <p><b>Abstract:</b> Modern autoregressive speech synthesis models leveraging language models have demonstrated remarkable performance. However, the sequential nature of next token prediction in these models leads to significant latency, hindering their deployment in scenarios where inference speed is critical. In this work, we propose Speech Speculative Decoding (SSD), a novel framework for autoregressive speech synthesis acceleration. Specifically, our method employs a lightweight draft model to generate candidate token sequences, which are subsequently verified in parallel by the target model using the proposed SSD framework. Experimental results demonstrate that SSD achieves a significant speedup of 1.4x compared with conventional autoregressive decoding, while maintaining high fidelity and naturalness. Subjective evaluations further validates the effectiveness of SSD in preserving the perceptual quality of the target model while accelerating inference.</p>
         <div class="figure-container" style="text-align: center; margin: 20px 0;">
             <img src="fig/model.jpg" alt="SSD Framework" style="max-width: 100%; height: auto;">
